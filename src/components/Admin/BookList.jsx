@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5004/api/books/get";
+  const API_URL = "https://fullstack-h3hj.onrender.com/api/books/get";
 
   const fetchBooks = async () => {
     try {
@@ -28,7 +28,7 @@ const BookList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5004/api/books/delete/${id}`);
+      await axios.delete(`https://fullstack-h3hj.onrender.com/api/books/delete/${id}`);
    setBooks((prev) => prev.filter((book) => book._id !== id));
    alert(" ✅successfully deleted")
     } catch (err) {

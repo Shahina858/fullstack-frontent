@@ -88,7 +88,7 @@ export default function BookView() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const res = await axios.get("http://localhost:5004/api/books/get");
+        const res = await axios.get("https://fullstack-h3hj.onrender.com/api/books/get");
         if (res.data.success) {
           setBooks(res.data.data);
           setFilteredBooks(res.data.data);
@@ -134,7 +134,7 @@ export default function BookView() {
 
   const addToCart = async (book) => {
     try {
-      const res = await axios.post("http://localhost:5004/api/books/cart", {
+      const res = await axios.post("https://fullstack-h3hj.onrender.com/api/books/cart", {
         bookId: book._id,
       });
       if (res.data.success) {

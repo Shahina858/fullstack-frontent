@@ -15,7 +15,7 @@ const AddBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5004/api/books/add", form);
+      await axios.post("https://fullstack-h3hj.onrender.com/api/books/add", form);
       alert("✅ Book added successfully!");
       setForm({ title: "", author: "", price: "", description: "" });
     } catch (err) {

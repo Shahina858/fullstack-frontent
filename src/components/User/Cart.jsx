@@ -36,7 +36,7 @@ const Mycart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get("http://localhost:5004/api/books/cart");
+        const res = await axios.get("https://fullstack-h3hj.onrender.com/api/books/cart");
         if (res.data && res.data.data) {
           // Map cart items to flatten the book details for easier access
           const mappedCart = res.data.data.map((item) => ({
@@ -60,7 +60,7 @@ const Mycart = () => {
   // 🟠 Remove item from backend + update UI
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`http://localhost:5004/api/books/cart/${id}`);
+      await axios.delete(`https://fullstack-h3hj.onrender.com/api/books/cart/${id}`);
       setCart((prev) => prev.filter((item) => item._id !== id));
       alert("Removed successfully");
     } catch (err) {

@@ -25,7 +25,7 @@ const UpdateBook = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await fetch(`http://localhost:5004/api/books/get/${id}`);
+        const res = await fetch(`https://fullstack-h3hj.onrender.com/api/books/get/${id}`);
         const data = await res.json();
         if (data.success) setBook(data.data);
       } catch (err) {
@@ -42,7 +42,7 @@ const UpdateBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5004/api/books/update/${id}`, {
+      const res = await fetch(`https://fullstack-h3hj.onrender.com/api/books/update/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(book),

@@ -8,7 +8,7 @@ const BookDetail = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await fetch(`http://localhost:5004/api/books/get/${id}`);
+        const res = await fetch(`https://fullstack-h3hj.onrender.com/api/books/get/${id}`);
         const data = await res.json();
         setBook(data);
       } catch (err) {
