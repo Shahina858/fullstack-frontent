@@ -18,6 +18,9 @@ import BookDetail from "./components/Admin/BookDetails";
 
 import "./index.css";
 import ViewBook from "./Pages/ViewBook";
+import { LogIn } from "lucide-react";
+import Signup from "./Pages/signup";
+import Login from "./Pages/login";
 
 // 🛒 Create Cart Context
 const CartContext = createContext();
@@ -44,6 +47,8 @@ const App = () => {
               <Route index element={<HomePage />} />
               <Route path="books" element={<ViewBook />} />
               <Route path="mycart" element={<Mycart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup/>} />
             </Route>
 
             {/* ADMIN ROUTES */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiShoppingCart, FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { useCart } from "../../App"; // ✅ make sure App.jsx exports useCart
@@ -6,11 +6,25 @@ import { useCart } from "../../App"; // ✅ make sure App.jsx exports useCart
 export default function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { cart } = useCart();
 
-  // 🧮 Calculate total items in the cart
+  // 🧮 Calculate total items in cart
   const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+  // 👤 Check login state
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    setUser(loggedInUser);
+  }, []);
+
+  // 🚪 Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    setUser(null);
+    navigate("/login");
+  };
 
   // 🔍 Handle search
   const handleSearch = (e) => {
@@ -31,7 +45,7 @@ export default function Navbar() {
             <Link to="/">📚 BookStore</Link>
           </div>
 
-          {/* DESKTOP LINKS (Home, Books, Cart beside each other) */}
+          {/* DESKTOP LINKS */}
           <div className="hidden md:flex items-center space-x-8 text-gray-300">
             <Link to="/" className="hover:text-amber-400 transition-colors">
               Home
@@ -39,7 +53,8 @@ export default function Navbar() {
             <Link to="/books" className="hover:text-amber-400 transition-colors">
               Books
             </Link>
-            {/* 🛒 Cart beside Books */}
+
+            {/* 🛒 Cart */}
             <Link
               to="/mycart"
               className="relative flex items-center space-x-1 hover:text-amber-400 transition-colors"
@@ -52,9 +67,31 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
+
+            {/* 👤 Login / Logout */}
+            {!user ? (
+              <button
+                onClick={() => navigate("/login")}
+                className="bg-amber-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-amber-400 transition"
+              >
+                Login
+              </button>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <span className="text-amber-400 font-medium">
+                  Hi, {user.name || "User"}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* DESKTOP SEARCH BAR */}
+          {/* DESKTOP SEARCH */}
           <form
             onSubmit={handleSearch}
             className="hidden md:flex items-center bg-gray-800 rounded-full px-3 py-1.5 focus-within:ring-2 focus-within:ring-amber-500"
@@ -104,7 +141,7 @@ export default function Navbar() {
             >
               Books
             </Link>
-            {/* Mobile Cart beside Books */}
+
             <Link
               to="/mycart"
               onClick={() => setMobileMenuOpen(false)}
@@ -114,7 +151,7 @@ export default function Navbar() {
               <span>Cart ({totalItems})</span>
             </Link>
 
-            {/* MOBILE SEARCH BAR */}
+            {/* MOBILE SEARCH */}
             <form
               onSubmit={handleSearch}
               className="flex items-center bg-gray-800 rounded-full px-3 py-2 mt-2"
@@ -133,6 +170,29 @@ export default function Navbar() {
                 <FiSearch size={20} />
               </button>
             </form>
+
+            {/* 👤 MOBILE LOGIN / LOGOUT */}
+            {!user ? (
+              <button
+                onClick={() => {
+                  navigate("/login");
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full bg-amber-500 text-gray-900 py-2 rounded-lg hover:bg-amber-400 transition"
+              >
+                Login
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            )}
           </div>
         </div>
       )}
